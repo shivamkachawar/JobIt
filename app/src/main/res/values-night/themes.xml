@@ -8,4 +8,11 @@
         <item name="android:textSize">12sp</item>
         <item name="android:includeFontPadding">false</item>
     </style>
+
+    <style name="YellowRoundedButton" parent="Widget.MaterialComponents.Button">
+        <item name="cornerRadius">16dp</item>
+        <item name="backgroundTint">#FFB300</item> <!-- Bright Yellow -->
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

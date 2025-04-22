@@ -3,32 +3,32 @@
 
     <item
         android:id="@+id/homeIcon"
-        android:icon="@drawable/no_match"
+        android:icon="@drawable/home"
         android:title="Home"
         android:scaleType="fitCenter"/>
 
     <item
         android:id="@+id/electionIcon"
-        android:icon="@drawable/no_match"
-        android:title="Election"
+        android:icon="@drawable/chat"
+        android:title="Chat"
         android:scaleType="fitCenter"/>
 
     <item
         android:id="@+id/facilityIcon"
-        android:icon="@drawable/no_match"
-        android:title="Facility"
+        android:icon="@drawable/resume"
+        android:title="Resume"
         android:scaleType="fitCenter"/>
 
     <item
         android:id="@+id/complaintIcon"
-        android:icon="@drawable/no_match"
-        android:title="Complaint"
+        android:icon="@drawable/explore"
+        android:title="Explore"
         android:scaleType="fitCenter"/>
 
     <item
         android:id="@+id/budgetIcon"
-        android:icon="@drawable/no_match"
-        android:title="Budget"
+        android:icon="@drawable/profile"
+        android:title="Profile"
         android:scaleType="fitCenter"/>
 
 </menu>

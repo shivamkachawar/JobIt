@@ -1,0 +1,3 @@
+package com.hackspectra.jobit
+
+data class User_data()

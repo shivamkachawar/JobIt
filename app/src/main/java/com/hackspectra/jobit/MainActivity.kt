@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             // We'll directly go to Home regardless of login status
             // Login status will be checked in Home activity for specific actions
-            startActivity(Intent(this@MainActivity, Home_Activity::class.java))
+            startActivity(Intent(this@MainActivity, login::class.java))
 
             // Removing current activity from stack
             finish()
