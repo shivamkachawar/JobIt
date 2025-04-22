@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "8398252239",
+    "project_id": "jobit-db01c",
+    "storage_bucket": "jobit-db01c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8398252239:android:ee982978c5d9f43eabafba",
+        "android_client_info": {
+          "package_name": "com.hackspectra.jobit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9gEX-gIitprBCgOyfczn9sjzRTMT9w8Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
