@@ -19,12 +19,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Job Title" />
+        <TextView
+            android:id="@+id/employerName"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Job Title" />
+        <TextView
+            android:id="@+id/jobCity"
+            android:textStyle="bold"
+            android:textSize="13sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Job Title" />
+
 
         <Button
-            android:id="@+id/btnViewDetails"
+            android:id="@+id/applyHere"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="View Details" />
+            android:text="Apply" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

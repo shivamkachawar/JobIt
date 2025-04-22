@@ -9,7 +9,8 @@ data class JobResponse(
 
 data class JobData(
     val job_title: String?,
-    val publisher_name: String?,
-    val location: String?,
-    val salary_period: String?
+    val employer_name: String?,
+    val job_city: String?,
+    val job_description: String?,
+    val job_apply_link : String?
 )

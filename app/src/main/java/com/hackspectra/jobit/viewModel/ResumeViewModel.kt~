@@ -57,29 +57,25 @@ class ResumeViewModel : ViewModel() {
         }
     }
 
-    private suspend fun extractTextFromPdf(context: Context, pdfUri: Uri): String =
-        withContext(Dispatchers.IO) {
-            val fileDescriptor = context.contentResolver.openFileDescriptor(pdfUri, "r")
-            val text = StringBuilder()
+    private suspend fun extractTextFromPdf(context: Context, pdfUri: Uri): String = withContext(Dispatchers.IO) {
+        val fileDescriptor = context.contentResolver.openFileDescriptor(pdfUri, "r")
+        val text = StringBuilder()
 
-            fileDescriptor?.use { parcelFD ->
-                val reader = PdfReader(FileInputStream(parcelFD.fileDescriptor))
-                val pages = reader.numberOfPages
+        fileDescriptor?.use { parcelFD ->
+            val reader = PdfReader(FileInputStream(parcelFD.fileDescriptor))
+            val pages = reader.numberOfPages
 
-                for (i in 1..pages) {
-                    text.append(PdfTextExtractor.getTextFromPage(reader, i))
-                }
-
-                reader.close()
+            for (i in 1..pages) {
+                text.append(PdfTextExtractor.getTextFromPage(reader, i))
             }
 
-            return@withContext text.toString()
+            reader.close()
         }
 
-    private suspend fun callGeminiAPI(
-        resumeText: String,
-        jobDescription: String
-    ): Pair<String, Int> = withContext(Dispatchers.IO) {
+        return@withContext text.toString()
+    }
+
+    private suspend fun callGeminiAPI(resumeText: String, jobDescription: String): Pair<String, Int> = withContext(Dispatchers.IO) {
         try {
             val client = OkHttpClient.Builder()
                 .connectTimeout(60, TimeUnit.SECONDS)
@@ -91,8 +87,7 @@ class ResumeViewModel : ViewModel() {
             val mediaType = "application/json".toMediaType()
 
             // Updated correct endpoint for Gemini API
-            val url =
-                "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=$apiKey"
+            val url = "https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=$apiKey"
 
             val prompt = """
             You are an expert ATS-friendly resume optimizer.
@@ -144,8 +139,7 @@ class ResumeViewModel : ViewModel() {
                 return@withContext formatResumeLocally(resumeText, jobDescription)
             }
 
-            val responseBody =
-                response.body?.string() ?: throw Exception("Empty response from Gemini")
+            val responseBody = response.body?.string() ?: throw Exception("Empty response from Gemini")
 
             // Debug log
             println("Gemini Response: $responseBody")
@@ -153,9 +147,7 @@ class ResumeViewModel : ViewModel() {
             val jsonResponse = JSONObject(responseBody)
 
             // Parse response with fallback options
-            if (!jsonResponse.has("candidates") || jsonResponse.getJSONArray("candidates")
-                    .length() == 0
-            ) {
+            if (!jsonResponse.has("candidates") || jsonResponse.getJSONArray("candidates").length() == 0) {
                 println("No candidates in response, using local formatting")
                 return@withContext formatResumeLocally(resumeText, jobDescription)
             }
@@ -194,10 +186,7 @@ class ResumeViewModel : ViewModel() {
     }
 
     // Format the resume using the actual user's content without AI assistance
-    private suspend fun formatResumeLocally(
-        resumeText: String,
-        jobDescription: String
-    ): Pair<String, Int> = withContext(Dispatchers.IO) {
+    private suspend fun formatResumeLocally(resumeText: String, jobDescription: String): Pair<String, Int> = withContext(Dispatchers.IO) {
         // Extract actual resume sections
         val parsedResume = parseResumeContent(resumeText)
 
@@ -245,110 +234,86 @@ class ResumeViewModel : ViewModel() {
             </div>
             
             <!-- Skills section -->
-            ${
-            if (parsedResume.skills.isNotEmpty()) """
+            ${if (parsedResume.skills.isNotEmpty()) """
             <div class="section">
                 <h2>Skills</h2>
                 <div>
-                    ${
-                parsedResume.skills.map { skill ->
-                    "<span class='skill-tag'>${highlightIfKeyword(skill, jobKeywords)}</span>"
-                }.joinToString(" ")
-            }
+                    ${parsedResume.skills.map { skill ->
+            "<span class='skill-tag'>${highlightIfKeyword(skill, jobKeywords)}</span>"
+        }.joinToString(" ")}
                 </div>
             </div>
-            """ else ""
-        }
+            """ else ""}
             
             <!-- Experience section -->
-            ${
-            if (parsedResume.experience.isNotEmpty()) """
+            ${if (parsedResume.experience.isNotEmpty()) """
             <div class="section">
                 <h2>Experience</h2>
-                ${
-                parsedResume.experience.joinToString("\n") { job ->
-                    """
+                ${parsedResume.experience.joinToString("\n") { job ->
+            """
                     <div>
                         <h3 class="job-title">${job.title}</h3>
                         <p class="company">${job.company} <span class="dates">${job.dates}</span></p>
                         <ul>
-                            ${
-                        job.responsibilities.joinToString("\n") { resp ->
-                            "<li>${highlightKeywords(resp, jobKeywords)}</li>"
-                        }
-                    }
+                            ${job.responsibilities.joinToString("\n") { resp ->
+                "<li>${highlightKeywords(resp, jobKeywords)}</li>"
+            }}
                         </ul>
                     </div>
                     """
-                }
-            }
+        }}
             </div>
-            """ else ""
-        }
+            """ else ""}
             
             <!-- Projects section -->
-            ${
-            if (parsedResume.projects.isNotEmpty()) """
+            ${if (parsedResume.projects.isNotEmpty()) """
             <div class="section">
                 <h2>Projects</h2>
-                ${
-                parsedResume.projects.joinToString("\n") { project ->
-                    """
+                ${parsedResume.projects.joinToString("\n") { project ->
+            """
                     <div>
                         <h3 class="project-name">${project.name}</h3>
                         ${if (project.dates.isNotBlank()) "<p class='dates'>${project.dates}</p>" else ""}
                         <ul>
-                            ${
-                        project.details.joinToString("\n") { detail ->
-                            "<li>${highlightKeywords(detail, jobKeywords)}</li>"
-                        }
-                    }
+                            ${project.details.joinToString("\n") { detail ->
+                "<li>${highlightKeywords(detail, jobKeywords)}</li>"
+            }}
                         </ul>
                     </div>
                     """
-                }
-            }
+        }}
             </div>
-            """ else ""
-        }
+            """ else ""}
             
             <!-- Education section -->
-            ${
-            if (parsedResume.education.isNotEmpty()) """
+            ${if (parsedResume.education.isNotEmpty()) """
             <div class="section">
                 <h2>Education</h2>
-                ${
-                parsedResume.education.joinToString("\n") { edu ->
-                    """
+                ${parsedResume.education.joinToString("\n") { edu ->
+            """
                     <div>
                         <h3 class="degree">${edu.degree}</h3>
                         <p class="institution">${edu.institution} <span class="dates">${edu.dates}</span></p>
                         ${if (edu.gpa.isNotBlank()) "<p>GPA: ${edu.gpa}</p>" else ""}
                     </div>
                     """
-                }
-            }
+        }}
             </div>
-            """ else ""
-        }
+            """ else ""}
             
             <!-- Additional sections -->
-            ${
-            parsedResume.additionalSections.joinToString("\n") { section ->
-                """
+            ${parsedResume.additionalSections.joinToString("\n") { section ->
+            """
                 <div class="section">
                     <h2>${section.title}</h2>
                     <ul>
-                        ${
-                    section.content.joinToString("\n") { content ->
-                        "<li>${highlightKeywords(content, jobKeywords)}</li>"
-                    }
-                }
+                        ${section.content.joinToString("\n") { content ->
+                "<li>${highlightKeywords(content, jobKeywords)}</li>"
+            }}
                     </ul>
                 </div>
                 """
-            }
-        }
+        }}
         </body>
         </html>
         """.trimIndent()
@@ -376,8 +341,7 @@ class ResumeViewModel : ViewModel() {
             if (line.contains("@") ||
                 line.contains("linkedin") ||
                 line.contains("github") ||
-                line.contains(Regex("\\d{3}[-.\\s]?\\d{3}[-.\\s]?\\d{4}"))
-            ) {
+                line.contains(Regex("\\d{3}[-.\\s]?\\d{3}[-.\\s]?\\d{4}"))) {
                 contactInfo.append(line).append("<br>")
             }
         }
@@ -385,22 +349,19 @@ class ResumeViewModel : ViewModel() {
 
         // Identify sections
         val sectionStartIndices = mutableMapOf<String, Int>()
-        val sectionNames = listOf(
-            "Experience", "Skills", "Education", "Projects", "Work Experience",
+        val sectionNames = listOf("Experience", "Skills", "Education", "Projects", "Work Experience",
             "Technical Skills", "Professional Experience", "Employment",
             "Certifications", "Awards", "Publications", "Leadership",
             "Volunteering", "Interests", "Languages", "References",
             "Achievements", "Extracurricular", "Technical Problem Solving",
-            "Leadership & Entrepreneurship"
-        )
+            "Leadership & Entrepreneurship")
 
         for (i in lines.indices) {
             val line = lines[i].trim()
             for (section in sectionNames) {
                 if (line.equals(section, ignoreCase = true) ||
                     line.startsWith("$section:") ||
-                    line.startsWith("$section ")
-                ) {
+                    line.startsWith("$section ")) {
                     sectionStartIndices[section] = i
                     break
                 }
@@ -413,8 +374,7 @@ class ResumeViewModel : ViewModel() {
         // Process each section
         for (i in sortedSections.indices) {
             val (sectionName, startIndex) = sortedSections[i]
-            val endIndex =
-                if (i < sortedSections.size - 1) sortedSections[i + 1].second else lines.size
+            val endIndex = if (i < sortedSections.size - 1) sortedSections[i + 1].second else lines.size
 
             val sectionContent = lines.subList(startIndex + 1, endIndex)
 
@@ -482,10 +442,7 @@ class ResumeViewModel : ViewModel() {
 
                 // Company name and dates (usually contains year or date markers)
                 currentJob != null && currentJob.company.isBlank() &&
-                        (trimmedLine.contains("20") || trimmedLine.contains(
-                            "Present",
-                            ignoreCase = true
-                        )) -> {
+                        (trimmedLine.contains("20") || trimmedLine.contains("Present", ignoreCase = true)) -> {
                     // If line contains a date, split into company and dates
                     val parts = trimmedLine.split(Regex("\\s*[|,]\\s*|\\s+(?=\\d)"))
                     if (parts.size > 1) {
@@ -498,12 +455,9 @@ class ResumeViewModel : ViewModel() {
                 }
 
                 // Bullet points or responsibilities
-                trimmedLine.startsWith("•") || trimmedLine.startsWith("-") || trimmedLine.startsWith(
-                    "*"
-                ) -> {
+                trimmedLine.startsWith("•") || trimmedLine.startsWith("-") || trimmedLine.startsWith("*") -> {
                     collectingResponsibilities = true
-                    val cleanLine =
-                        trimmedLine.removePrefix("•").removePrefix("-").removePrefix("*").trim()
+                    val cleanLine = trimmedLine.removePrefix("•").removePrefix("-").removePrefix("*").trim()
                     currentJob?.responsibilities?.add(cleanLine)
                 }
 
@@ -542,8 +496,7 @@ class ResumeViewModel : ViewModel() {
 
             // Handle skills that might be separated by commas, bullets, or other delimiters
             if (trimmedLine.contains(",") || trimmedLine.contains("•") ||
-                trimmedLine.contains(" - ") || trimmedLine.contains("| ")
-            ) {
+                trimmedLine.contains(" - ") || trimmedLine.contains("| ")) {
 
                 // Split by common delimiters
                 val skillItems = trimmedLine.split(Regex("[,•|]|-"))
@@ -571,8 +524,7 @@ class ResumeViewModel : ViewModel() {
             if (trimmedLine.contains("University", ignoreCase = true) ||
                 trimmedLine.contains("College", ignoreCase = true) ||
                 trimmedLine.contains("Institute", ignoreCase = true) ||
-                trimmedLine.contains("School", ignoreCase = true)
-            ) {
+                trimmedLine.contains("School", ignoreCase = true)) {
 
                 // Save previous education entry if there is one
                 if (currentEdu != null && currentEdu.institution.isNotBlank()) {
@@ -588,8 +540,7 @@ class ResumeViewModel : ViewModel() {
                         trimmedLine.contains("Master", ignoreCase = true) ||
                         trimmedLine.contains("Ph.D", ignoreCase = true) ||
                         trimmedLine.contains("B.", ignoreCase = true) ||
-                        trimmedLine.contains("M.", ignoreCase = true))
-            ) {
+                        trimmedLine.contains("M.", ignoreCase = true))) {
 
                 currentEdu.degree = trimmedLine
             }
@@ -598,16 +549,14 @@ class ResumeViewModel : ViewModel() {
                 (trimmedLine.contains("20") ||
                         trimmedLine.contains("-") ||
                         trimmedLine.contains("–") ||
-                        trimmedLine.contains("to", ignoreCase = true))
-            ) {
+                        trimmedLine.contains("to", ignoreCase = true))) {
 
                 currentEdu.dates = trimmedLine
             }
             // If line contains GPA information
             else if (currentEdu != null &&
                 (trimmedLine.contains("GPA", ignoreCase = true) ||
-                        trimmedLine.contains("CGPA", ignoreCase = true))
-            ) {
+                        trimmedLine.contains("CGPA", ignoreCase = true))) {
 
                 currentEdu.gpa = trimmedLine
             }
@@ -659,12 +608,9 @@ class ResumeViewModel : ViewModel() {
                 }
 
                 // Bullet points or details
-                trimmedLine.startsWith("•") || trimmedLine.startsWith("-") || trimmedLine.startsWith(
-                    "*"
-                ) -> {
+                trimmedLine.startsWith("•") || trimmedLine.startsWith("-") || trimmedLine.startsWith("*") -> {
                     collectingDetails = true
-                    val cleanLine =
-                        trimmedLine.removePrefix("•").removePrefix("-").removePrefix("*").trim()
+                    val cleanLine = trimmedLine.removePrefix("•").removePrefix("-").removePrefix("*").trim()
                     currentProject?.details?.add(cleanLine)
                 }
 
@@ -773,7 +719,7 @@ class ResumeViewModel : ViewModel() {
         }
 
         // Return final score, capped at 100
-        return (baseScore.toInt() + structureScore).toInt().coerceIn(50, 100)
+        return (baseScore + structureScore).toInt().coerceIn(50, 100)
     }
 
     data class ResumeData(
@@ -805,10 +751,4 @@ class ResumeViewModel : ViewModel() {
         var dates: String = "",
         val details: MutableList<String> = mutableListOf()
     )
-
-    data class AdditionalSection(
-        val title: String = "",
-        val content: List<String> = mutableListOf()
-    )
-
-}
+    

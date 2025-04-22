@@ -28,7 +28,7 @@ class homeFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var jobAdapter: JobAdapter
     private val jobList = mutableListOf<JobData>()
-    private lateinit var loadingBar: View
+
     private lateinit var apiService: JobApiService
     private lateinit var usernameText: TextView
     private lateinit var profilePhoto: ImageView
@@ -54,7 +54,6 @@ class homeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loadingBar = view.findViewById(R.id.loadingBar)
         fetchUserInfoAndJobs() // ✅ now it's safe
     }
 
@@ -104,8 +103,6 @@ class homeFragment : Fragment() {
     }
 
     private fun fetchJobs(keyword: String) {
-        loadingBar.visibility = View.VISIBLE
-
         lifecycleScope.launch {
             try {
                 val response = apiService.searchJobs(keyword)
@@ -118,8 +115,6 @@ class homeFragment : Fragment() {
                 }
             } catch (e: Exception) {
                 Log.e("JobFetch", "Exception: ${e.message}")
-            } finally {
-                loadingBar.visibility = View.GONE // 🔄 hide when done
             }
         }
     }

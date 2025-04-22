@@ -11,7 +11,7 @@
 android:id="@+id/ats_score_text"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
-android:text="ATS Score: 0/100"
+android:text="ATS Score"
 android:background="#FFC107"
     android:padding="12dp"
     android:textColor="#FFFFFF"

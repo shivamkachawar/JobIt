@@ -3,8 +3,22 @@
     android:id="@+id/chatFragmentRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:padding="16dp">
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:padding="@dimen/_5sdp"
+        android:background="@color/yellow">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Chat"
+            android:textStyle="bold"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20sdp"/>
+    </LinearLayout>
 
     <!-- Loading animation (ProgressBar) -->
     <ProgressBar

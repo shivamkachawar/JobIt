@@ -1,110 +1,3 @@
-//package com.hackspectra.jobit
-//
-//import android.os.Bundle
-//import android.print.PrintAttributes
-//import android.print.PrintManager
-//import android.webkit.WebView
-//import android.widget.Button
-//import android.widget.TextView
-//import android.widget.Toast
-//import androidx.activity.viewModels
-//import androidx.appcompat.app.AppCompatActivity
-//import com.hackspectra.jobit.viewModel.ResumeViewModel
-//
-//class TailoredResumeActivity : AppCompatActivity() {
-//
-//    private val viewModel: ResumeViewModel by viewModels()
-//
-//    private lateinit var atsScoreTextView: TextView
-//    private lateinit var resumeWebView: WebView
-//    private lateinit var downloadButton: Button
-//
-//    private var tailoredResumeContent: String? = null
-//    private var atsScore: Int = 0
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_tailored_resume)
-//
-//        atsScoreTextView = findViewById(R.id.ats_score_text)
-//        resumeWebView = findViewById(R.id.resume_web_view)
-//        downloadButton = findViewById(R.id.download_button)
-//
-//        tailoredResumeContent = intent.getStringExtra("resume_content")
-//        atsScore = intent.getIntExtra("ats_score", 0)
-//
-//        if (tailoredResumeContent != null) {
-//            atsScoreTextView.text = "ATS Score: $atsScore/100"
-//            displayResumeInWebView(tailoredResumeContent!!)
-//        }
-//
-//        downloadButton.setOnClickListener {
-//            downloadResumeAsPDF()
-//        }
-//    }
-//
-//    private fun displayResumeInWebView(resumeContent: String) {
-//        val htmlContent = formatToCompactHtml(resumeContent)
-//        resumeWebView.loadDataWithBaseURL(null, htmlContent, "text/html", "UTF-8", null)
-//    }
-//
-//    private fun downloadResumeAsPDF() {
-//        val fileName = "Tailored_Resume_${System.currentTimeMillis()}"
-//
-//        val printManager = getSystemService(PRINT_SERVICE) as PrintManager
-//        val printAdapter = resumeWebView.createPrintDocumentAdapter(fileName)
-//
-//        val printAttributes = PrintAttributes.Builder()
-//            .setMediaSize(PrintAttributes.MediaSize.ISO_A4)
-//            .setResolution(PrintAttributes.Resolution("res1", PRINT_SERVICE, 300, 300))
-//            .setMinMargins(PrintAttributes.Margins.NO_MARGINS)
-//            .build()
-//
-//        printManager.print(fileName, printAdapter, printAttributes)
-//        Toast.makeText(this, "Preparing resume PDF...", Toast.LENGTH_SHORT).show()
-//    }
-//
-//    private fun formatToCompactHtml(content: String): String {
-//        return """
-//            <html>
-//            <head>
-//                <style>
-//                    body {
-//                        font-family: Arial, sans-serif;
-//                        font-size: 10px;
-//                        line-height: 1.4;
-//                        margin: 20px;
-//                    }
-//                    h1, h2 {
-//                        font-size: 12px;
-//                        margin-bottom: 4px;
-//                    }
-//                    .section {
-//                        margin-bottom: 10px;
-//                    }
-//                    ul {
-//                        padding-left: 16px;
-//                        list-style-type: disc;
-//                        margin: 4px 0;
-//                    }
-//                    ul ul {
-//                        padding-left: 16px;
-//                        list-style-type: circle;
-//                    }
-//                    li {
-//                        margin-bottom: 4px;
-//                    }
-//                </style>
-//            </head>
-//            <body>
-//                $content
-//            </body>
-//            </html>
-//        """.trimIndent()
-//    }
-//}
-
-
 package com.hackspectra.jobit
 
 import android.os.Bundle
@@ -115,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class TailoredResumeActivity : AppCompatActivity() {
 

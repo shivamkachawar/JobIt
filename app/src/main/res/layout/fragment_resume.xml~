@@ -1,4 +1,4 @@
-<ScrollView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,25 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ResumeFragment">
 
+
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_40sdp"
-            android:padding="@dimen/_5sdp"
-            android:background="@color/yellow">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Resume Generator"
-                android:textStyle="bold"
-                android:layout_marginLeft="@dimen/_20sdp"
-                android:textColor="@color/black"
-                android:textSize="@dimen/_20sdp"/>
-        </LinearLayout>
+        android:orientation="vertical"
+        android:padding="20dp">
 
 
         <!-- Resume Upload Section -->
@@ -34,15 +24,13 @@
             android:text="Upload Resume"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textAlignment="center"
             android:textColor="#FF8F00"
-            android:layout_margin="20dp" />
+            android:layout_marginBottom="8dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/select_resume_button"
             style="@style/YellowRoundedButton"
             android:layout_width="match_parent"
-            android:layout_margin="20dp"
             android:layout_height="wrap_content"
             android:text="Select Resume (PDF)" />
 
@@ -50,7 +38,7 @@
             android:id="@+id/resume_name_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginTop="8dp"
             android:text="No file selected"
             android:textStyle="italic"
             android:textColor="#757575" />
@@ -65,11 +53,10 @@
 
         <!-- Job Description Section -->
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:text="Job Description"
-            android:textAlignment="center"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="#FF8F00" />
@@ -77,8 +64,8 @@
         <EditText
             android:id="@+id/job_description_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_200sdp"
-            android:layout_margin="20dp"
+            android:layout_height="@dimen/_300sdp"
+            android:layout_marginTop="8dp"
             android:hint="Paste job description here..."
             android:gravity="top"
             android:padding="12dp"
@@ -100,7 +87,7 @@
             style="@style/YellowRoundedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginTop="24dp"
             android:text="Generate Tailored Resume" />
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

@@ -144,12 +144,25 @@ class GeneralFragment : Fragment() {
 
         // Add industry-specific keywords
         val industryKeywords = listOf(
-            "Android", "Kotlin", "Java", "MVVM", "Architecture", "UI/UX", "Material Design",
-            "Jetpack", "Compose", "Firebase", "API", "Mobile", "App", "Testing", "Git",
-            "Agile", "CI/CD", "Performance", "Optimization", "React Native", "JavaScript",
-            "Python", "C++", "HTML", "CSS", "Web Development", "Frontend", "Backend",
-            "SQLite", "Room", "Database", "RESTful", "Retrofit", "Coroutines", "LiveData",
-            "ViewModel", "TDD", "Redux", "React", "Figma", "Expo"
+            // Programming Languages & Core Technologies
+            "Java", "Kotlin", "JavaScript", "TypeScript", "Swift", "Objective-C", "XML", "JSON",
+
+            // Android Development
+            "Android", "Android Studio", "SDK", "APIs", "Google Play", "Material Design",
+            "Jetpack", "AndroidX", "Compose", "Activities", "Fragments", "Lifecycle",
+            "MVVM", "MVC", "MVP", "Clean Architecture", "Coroutines", "RxJava", "RecyclerView",
+            "ConstraintLayout", "Navigation Component", "Room", "WorkManager", "ViewModel",
+            "LiveData", "Intents", "Services", "Gradle", "Kotlin Extensions", "Dagger", "Hilt",
+
+            // React Native Development
+            "React Native", "React", "JSX", "Hooks", "Redux", "Context API", "Expo", "Native Modules",
+            "React Navigation", "Async Storage", "Styled Components", "React Native CLI",
+            "Native Bridges", "Flexbox", "Metro Bundler", "FastLane", "Hermes Engine",
+
+            // Cross-Platform Concepts
+            "Cross-Platform", "Mobile Development", "UI Components", "State Management",
+            "Navigation", "Responsive Design", "Offline Support", "Push Notifications",
+
             )
             // Create a combined set of all relevant keywords
         val allKeywords = (jobKeywords + industryKeywords).distinct()

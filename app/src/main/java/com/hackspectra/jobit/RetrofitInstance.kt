@@ -18,7 +18,7 @@ object RetrofitInstance {
         .addInterceptor(logging) // <-- Add this
         .addInterceptor { chain ->
             val request = chain.request().newBuilder()
-                .addHeader("X-RapidAPI-Key", "dcd1bdc017msh570ba3f90883542p1aac17jsn86e7052acc7e")
+                .addHeader("X-RapidAPI-Key", "5f968bc9afmshc16d1c0415d9b32p1c3722jsn0425f694082a")
                 .addHeader("X-RapidAPI-Host", "jsearch.p.rapidapi.com")
                 .build()
             chain.proceed(request)

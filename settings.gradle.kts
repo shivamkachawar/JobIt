@@ -7,6 +7,8 @@ pluginManagement {
                 includeGroupByRegex("androidx.*")
             }
         }
+        maven(url = "https://jitpack.io") // for other libs
+        maven(url = "https://jcenter.bintray.com/")
         maven { url = uri("https://kommunicate.jfrog.io/artifactory/kommunicate-android-sdk") }
         mavenCentral()
         gradlePluginPortal()
