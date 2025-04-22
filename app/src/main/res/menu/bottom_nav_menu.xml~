@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeIcon"
+        android:icon="@drawable/no_match"
+        android:title="Home"
+        android:scaleType="fitCenter"/>
+
+    <item
+        android:id="@+id/electionIcon"
+        android:icon="@drawable/no_match"
+        android:title="Election"
+        android:scaleType="fitCenter"/>
+
+    <item
+        android:id="@+id/facilityIcon"
+        android:icon="@drawable/no_match"
+        android:title="Facility"
+        android:scaleType="fitCenter"/>
+
+    <item
+        android:id="@+id/complaintIcon"
+        android:icon="@drawable/no_match"
+        android:title="Complaint"
+        android:scaleType="fitCenter"/>
+
+    <item
+        android:id="@+id/budgetIcon"
+        android:icon="@drawable/no"
+        android:title="Budget"
+        android:scaleType="fitCenter"/>
+
+</menu>

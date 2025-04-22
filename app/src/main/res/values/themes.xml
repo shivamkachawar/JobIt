@@ -5,5 +5,10 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
+    <style name="BottomNavigationTextStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
     <style name="Theme.JobIt" parent="Base.Theme.JobIt" />
 </resources>

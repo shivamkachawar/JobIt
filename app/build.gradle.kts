@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.hackspectra.jobit"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.hackspectra.jobit"
@@ -34,6 +34,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    viewBinding {
+        enable = true
+    }
 }
 
 dependencies {
@@ -49,4 +52,7 @@ dependencies {
 
     implementation(platform("com.google.firebase:firebase-bom:33.12.0"))
     implementation("com.google.firebase:firebase-analytics")
+
+    implementation ("com.intuit.ssp:ssp-android:1.1.1")
+    implementation ("com.intuit.sdp:sdp-android:1.1.1")
 }
