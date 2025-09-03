@@ -1,4 +1,5 @@
 package com.hackspectra.jobit
+
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -7,8 +8,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -19,17 +24,21 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // For splash screen and user logging info fetching
+        auth = FirebaseAuth.getInstance()
+
         splashScreenSetup()
     }
 
     private fun splashScreenSetup() {
         Handler(Looper.getMainLooper()).postDelayed({
-            // We'll directly go to Home regardless of login status
-            // Login status will be checked in Home activity for specific actions
-            startActivity(Intent(this@MainActivity, login::class.java))
-
-            // Removing current activity from stack
+            val currentUser = auth.currentUser
+            if (currentUser != null) {
+                // User is already logged in → Go to Home
+                startActivity(Intent(this@MainActivity, Home_Activity::class.java))
+            } else {
+                // User is not logged in → Go to Login
+                startActivity(Intent(this@MainActivity, login::class.java))
+            }
             finish()
         }, 2000)
     }

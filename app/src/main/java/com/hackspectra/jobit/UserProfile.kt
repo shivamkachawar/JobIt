@@ -7,6 +7,6 @@ data class UserProfile(
     val jobTitle: String = "",
     val projects: String = "",
     val experiences: String = "",
-    val photoUrl: String = "",
-    val resumeUrl: String = ""
+    val photoUrl: String? = null,
+    val resumeUrl: String? = null
 )

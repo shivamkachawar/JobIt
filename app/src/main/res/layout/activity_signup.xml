@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
+    android:fitsSystemWindows="true"
     android:background="@android:color/white">
 
     <!-- Heading -->
@@ -25,83 +27,86 @@
     <!-- Email Field -->
     <EditText
         android:id="@+id/etEmail"
-        android:layout_width="0dp"
+        android:layout_width="325dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/yellow"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:padding="12dp"
-        android:background="@android:drawable/edit_text"
-        app:layout_constraintTop_toBottomOf="@id/tvSignupTitle"
-        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/tvSignupTitle" />
 
     <!-- Password Field -->
     <EditText
         android:id="@+id/etPassword"
-        android:layout_width="0dp"
+        android:layout_width="325dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/yellow"
         android:hint="Password"
         android:inputType="textPassword"
         android:padding="12dp"
-        android:background="@android:drawable/edit_text"
-        app:layout_constraintTop_toBottomOf="@id/etEmail"
-        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/etEmail" />
 
     <!-- Confirm Password Field -->
     <EditText
         android:id="@+id/etConfirmPassword"
-        android:layout_width="0dp"
+        android:layout_width="325dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/yellow"
         android:hint="Confirm Password"
         android:inputType="textPassword"
         android:padding="12dp"
-        android:background="@android:drawable/edit_text"
-        app:layout_constraintTop_toBottomOf="@id/etPassword"
-        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/etPassword" />
 
     <!-- Sign Up Button -->
     <Button
         android:id="@+id/btnSignup"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Sign Up"
-        android:backgroundTint="@color/yellow"
-        android:textColor="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/etConfirmPassword"
+        android:layout_width="325dp"
+        android:layout_height="60dp"
         android:layout_marginTop="24dp"
+        android:backgroundTint="@color/yellow"
+        android:fontFamily="sans-serif-black"
+        android:text="Sign Up"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/etConfirmPassword" />
 
     <!-- Already a user? Text -->
     <TextView
         android:id="@+id/tvAlreadyUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Already a user?"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/btnSignup"
         android:layout_marginTop="24dp"
+        android:text="Already a user?"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/btnSignup" />
 
     <!-- Login Button -->
     <Button
         android:id="@+id/btnGoToLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:backgroundTint="@android:color/transparent"
-        android:textColor="@color/yellow"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/tvAlreadyUser"
         android:layout_marginTop="4dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:backgroundTint="@android:color/transparent"
+        android:text="Login"
+        android:textColor="@color/yellow"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/tvAlreadyUser"
+        app:layout_constraintStart_toStartOf="@+id/tvAlreadyUser"
+        app:layout_constraintTop_toBottomOf="@id/tvAlreadyUser" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

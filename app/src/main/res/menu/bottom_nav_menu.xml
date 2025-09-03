@@ -22,7 +22,7 @@
     <item
         android:id="@+id/complaintIcon"
         android:icon="@drawable/explore"
-        android:title="Explore"
+        android:title="ATS Score"
         android:scaleType="fitCenter"/>
 
     <item

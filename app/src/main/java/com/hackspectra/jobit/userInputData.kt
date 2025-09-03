@@ -134,52 +134,89 @@ class userInputData : AppCompatActivity() {
 
         val safeEmail = email.replace(".", ",").replace("@", "_at_")
 
-        val photoRef = storage.child("photos/$safeEmail.jpg")
-        val resumeRef = storage.child("resumes/$safeEmail.pdf")
+        // Default URLs (null if not uploaded)
+        var photoUrl: String? = null
+        var resumeUrl: String? = null
 
-        photoRef.putFile(selectedPhotoUri!!)
-            .addOnSuccessListener {
-                photoRef.downloadUrl.addOnSuccessListener { photoUrl ->
+        fun saveProfile() {
+            val profile = UserProfile(
+                name, email, phone, jobTitle,
+                projects, experiences,
+                photoUrl, resumeUrl
+            )
 
-                    resumeRef.putFile(selectedResumeUri!!)
-                        .addOnSuccessListener {
-                            resumeRef.downloadUrl.addOnSuccessListener { resumeUrl ->
-
-                                val profile = UserProfile(
-                                    name, email, phone, jobTitle,
-                                    projects, experiences,
-                                    photoUrl.toString(), resumeUrl.toString()
-                                )
-
-                                firestore.collection("users").document(safeEmail).set(profile)
-                                    .addOnSuccessListener {
-                                        Toast.makeText(
-                                            this,
-                                            "Profile uploaded successfully!",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                        val intent = Intent(this, Home_Activity::class.java)
-                                        startActivity(intent)
-                                        finish()
-                                    }
-                                    .addOnFailureListener {
-                                        Toast.makeText(
-                                            this,
-                                            "Firestore error: ${it.message}",
-                                            Toast.LENGTH_LONG
-                                        ).show()
-                                    }
-
-                            }
-                        }
-                        .addOnFailureListener {
-                            Toast.makeText(this, "Resume upload failed: ${it.message}", Toast.LENGTH_LONG).show()
-                        }
-
+            firestore.collection("users").document(safeEmail).set(profile)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Profile uploaded successfully!", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this, Home_Activity::class.java))
+                    finish()
                 }
-            }
-            .addOnFailureListener {
-                Toast.makeText(this, "Photo upload failed: ${it.message}", Toast.LENGTH_LONG).show()
-            }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Firestore error: ${it.message}", Toast.LENGTH_LONG).show()
+                }
+        }
+
+        // Case 1: Both files selected → upload both
+        if (selectedPhotoUri != null && selectedResumeUri != null) {
+            val photoRef = storage.child("photos/$safeEmail.jpg")
+            val resumeRef = storage.child("resumes/$safeEmail.pdf")
+
+            photoRef.putFile(selectedPhotoUri!!)
+                .addOnSuccessListener {
+                    photoRef.downloadUrl.addOnSuccessListener { url ->
+                        photoUrl = url.toString()
+
+                        resumeRef.putFile(selectedResumeUri!!)
+                            .addOnSuccessListener {
+                                resumeRef.downloadUrl.addOnSuccessListener { rUrl ->
+                                    resumeUrl = rUrl.toString()
+                                    saveProfile()
+                                }
+                            }
+                            .addOnFailureListener {
+                                Toast.makeText(this, "Resume upload failed, saving without resume.", Toast.LENGTH_SHORT).show()
+                                saveProfile()
+                            }
+                    }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Photo upload failed, saving without photo.", Toast.LENGTH_SHORT).show()
+                    saveProfile()
+                }
+        }
+        // Case 2: Only photo selected
+        else if (selectedPhotoUri != null) {
+            val photoRef = storage.child("photos/$safeEmail.jpg")
+            photoRef.putFile(selectedPhotoUri!!)
+                .addOnSuccessListener {
+                    photoRef.downloadUrl.addOnSuccessListener { url ->
+                        photoUrl = url.toString()
+                        saveProfile()
+                    }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Photo upload failed, saving without photo.", Toast.LENGTH_SHORT).show()
+                    saveProfile()
+                }
+        }
+        // Case 3: Only resume selected
+        else if (selectedResumeUri != null) {
+            val resumeRef = storage.child("resumes/$safeEmail.pdf")
+            resumeRef.putFile(selectedResumeUri!!)
+                .addOnSuccessListener {
+                    resumeRef.downloadUrl.addOnSuccessListener { url ->
+                        resumeUrl = url.toString()
+                        saveProfile()
+                    }
+                }
+                .addOnFailureListener {
+                    Toast.makeText(this, "Resume upload failed, saving without resume.", Toast.LENGTH_SHORT).show()
+                    saveProfile()
+                }
+        }
+        // Case 4: Neither selected → save only Firestore data
+        else {
+            saveProfile()
+        }
     }
 }

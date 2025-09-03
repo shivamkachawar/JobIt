@@ -114,4 +114,6 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation ("com.google.guava:guava:26.0-android")
 
+    implementation ("io.kommunicate.sdk:kommunicateui:2.10.0")
+
 }

@@ -42,8 +42,8 @@
             android:id="@+id/select_resume_button"
             style="@style/YellowRoundedButton"
             android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:layout_margin="20dp"
-            android:layout_height="wrap_content"
             android:text="Select Resume (PDF)" />
 
         <TextView
@@ -99,7 +99,7 @@
             android:id="@+id/generate_button"
             style="@style/YellowRoundedButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_margin="20dp"
             android:text="Generate Tailored Resume" />
     </LinearLayout>
